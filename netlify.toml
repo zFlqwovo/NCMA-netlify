@@ -1,0 +1,34 @@
+[build]
+  command = "npm install --production"
+  functions = "netlify/functions"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api"
+  status = 200
+  conditions = {Path = ["/", "/daily_signin", "/login*", "/song*", "/album*", "/playlist*", "/user*", "/search*", "/comment*", "/lyric*", "/artist*", "/mv*", "/dj*", "/radio*", "/banner*", "/recommend*", "/personal_fm*", "/fm_trash*", "/related_playlist*", "/top*", "/cloud*", "/batch*", "/activate*", "/captcha*", "/check*", "/country*", "/digital*", "/follow*", "/hot*", "/like*", "/listentogether*", "/msg*", "/musician*", "/notify*", "/playlist_*", "/record*", "/resource*", "/send*", "/setting*", "/share*", "/sign*", "/simi*", "/style*", "/topic*", "/ugc*", "/unikey*", "/video*", "/vip*", "/voice*", "/weblog*", "/yunbei*", "/register*", "/cellphone*", "/activate*", "/avatar*", "/csrf*", "/rebind*", "/signin*", "/status*", "/token*", "/login*", "/logout*", "/nickname*", "/verify*", "/inner*", "/audio*", "/multimatch*", "/musician*", "/scrobble*", "/member*", "/aidj*", "/broadcast*", "/song_url*", "/listen_together*"]}
+
+[headers]
+  for = "/*"
+    [headers.values]
+      Access-Control-Allow-Origin = "*"
+      Access-Control-Allow-Credentials = "true"
+      Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+      Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
+
+[[headers]]
+  for = "/api/*"
+    [headers.values]
+      Access-Control-Allow-Origin = "*"
+      Access-Control-Allow-Credentials = "true"
+      Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+      Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"

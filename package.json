@@ -11,7 +11,9 @@
     "prepare": "husky install",
     "pkgwin": "pkg . -t node18-win-x64 -C GZip -o precompiled/app",
     "pkglinux": "pkg . -t node18-linux-x64 -C GZip -o precompiled/app",
-    "pkgmacos": "pkg . -t node18-macos-x64 -C GZip -o precompiled/app"
+    "pkgmacos": "pkg . -t node18-macos-x64 -C GZip -o precompiled/app",
+    "netlify:build": "npm install --production",
+    "netlify:dev": "netlify dev"
   },
   "bin": "./app.js",
   "pkg": {
@@ -85,6 +87,7 @@
     "pac-proxy-agent": "^7.2.0",
     "qrcode": "^1.5.4",
     "safe-decode-uri-component": "^1.2.1",
+    "serverless-http": "^4.0.0",
     "tunnel": "^0.0.6",
     "xml2js": "^0.6.2",
     "yargs": "^18.0.0"
