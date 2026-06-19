@@ -10,3 +10,7 @@ anonymous_token
 .vercel
 .env
 IFLOW.md
+.codegraph
+.env
+.env.local
+package-lock.json
