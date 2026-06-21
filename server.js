@@ -407,6 +407,15 @@ async function constructServer(moduleDefs) {
     })
   }
 
+  // Catch-all: return JSON 404 for unmatched API routes
+  app.use((req, res) => {
+    res.status(404).send({
+      code: 404,
+      data: null,
+      msg: 'Not Found',
+    })
+  })
+
   return app
 }
 
@@ -456,6 +465,7 @@ async function serveNcmApi(options) {
 }
 
 module.exports = {
+  constructServer,
   serveNcmApi,
   getModulesDefinitions,
 }
