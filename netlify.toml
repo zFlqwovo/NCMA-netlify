@@ -4,12 +4,13 @@
 
 [functions]
   node_bundler = "nft"
-  included_files = ["module/**", "util/**", "plugins/**", "public/**", "data/**", "generateConfig.js", "main.js", "server.js", "interface.d.ts"]
+  included_files = ["module/**", "util/**", "plugins/**", "public/**", "data/**", "generateConfig.js", "main.js", "server.js"]
 
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true
 
 [[headers]]
   for = "/*"
