@@ -1259,9 +1259,11 @@ tags: 歌单标签
 `lossless`=>`无损`, `hires`=>`Hi-Res`, `jyeffect` => `高清环绕声`, `sky` => `沉浸环绕声`, `dolby` => `杜比全景声`, `jymaster` => `超清母带`
 `unblock`: 是否使用使用歌曲解锁, 分为`true`和`false`
 
+**可选参数 :** `immerseType`: 沉浸声环绕声类型, 分为 `c51` => `c51类型`, `ste` => `环绕立体声类型`, `aac` => `aac类型`, 仅在 `level=sky` 时生效, 默认为 `c51`
+
 **接口地址 :** `/song/url/v1`
 
-**调用例子 :** `/song/url/v1?id=1969519579&level=exhigh` `/song/url/v1?id=1969519579,33894312&level=lossless`
+**调用例子 :** `/song/url/v1?id=1969519579&level=exhigh` `/song/url/v1?id=1969519579,33894312&level=lossless` `/song/url/v1?id=1969519579&level=sky&immerseType=ste`
 
 说明：`杜比全景声`音质需要设备支持，不同的设备可能会返回不同码率的 url。cookie 需要传入`os=pc`保证返回正常码率的 url。
 
@@ -1394,8 +1396,6 @@ tags: 歌单标签
 ### 收藏/取消收藏歌单
 
 说明 : 调用此接口 , 传入类型和歌单 id 可收藏歌单或者取消收藏歌单
-
-!> 警告: 在`v4.29.7`版本后, 在网易云登陆后请求要带上`timestamp`字段, 否则会导致请求不合法
 
 **必选参数 :**
 
@@ -3612,6 +3612,32 @@ type='1009' 获取其 id, 如`/search?keywords= 代码时间 &type=1009`
 
 **调用例子 :** `/artist/new/song?limit=1` `/artist/new/song?limit=1&before=1602777625000`
 
+### 关注歌手最近新歌 - 播放全部
+
+说明 : 登录后调用此接口可获取所有关注歌手最近的 50 首新歌
+
+**接口地址 :** `/artist/new/song/playall`
+
+**调用例子 :** `/artist/new/song/playall`
+
+### 关注歌手新作品（歌曲/MV）
+
+说明 : 登录后调用此接口可分页获取关注歌手的新歌曲和 MV
+
+**可选参数 :** `limit`: 返回数量，默认为 10
+
+`startTimestamp`: 时间游标，首次请求默认为当前时间，后续请求传入上一页返回的时间游标
+
+`before`: `startTimestamp` 的别名
+
+`sourceType`: 作品来源类型，已确认 `1` 表示新歌，其他取值待确认，默认为 `1`
+
+`firstRequest`: 是否首次请求，默认为 `true`，翻页时传 `false`
+
+**接口地址 :** `/artist/new/song/mv/list/v2`
+
+**调用例子 :** `/artist/new/song/mv/list/v2` `/artist/new/song/mv/list/v2?startTimestamp=1783680576099&sourceType=1&limit=10&firstRequest=false`
+
 ### 关注歌手新 MV
 
 说明 :登录后调用此接口可获取关注歌手新 MV
@@ -5447,7 +5473,113 @@ let data = encodeURIComponent(
 
 **接口地址 :** `/song/cloud/download`
 
-**调用例子 :** `/song/cloud/download?id=123456789`
+**调用例子 :** `/song/cloud/download?id=123456789`'
+
+### 获取广告
+
+说明 : 调用此接口, 可获取广告
+
+**接口地址 :** `/ad/get`
+
+**调用例子 :** `/ad/get`
+
+### 获取30分钟免费听歌时长
+
+说明 : 登录后调用此接口, 获取30分钟免费听歌时长
+
+!> 警告: 通过调取接口出现的任何问题由调用者自行承担
+
+**可选参数 :** `reqUid` 通过`/ad/get` 获取的广告ID
+
+**接口地址 :** `/ad/listening/rights/gain`
+
+**调用例子 :** `/ad/listening/rights/gain`
+
+### 云小编 - 获取用户详情
+
+说明: 登录后调用此接口, 获取云小编用户详情
+
+**接口地址:** `/rep/ugc/user/get`
+
+**调用例子:** `/rep/ugc/user/get`
+
+### 云小编 - 每日签到
+
+说明: 登录后调用此接口, 进行云小编签到, 领取 5 积分, 签到后 `/rep/ugc/user/get` 返回 `data.signed = 1`
+
+**接口地址:** `/rep/ugc/user/sign`
+
+**调用例子:** `/rep/ugc/user/sign`
+
+### 云小编 - 查询会员任务状态
+
+说明: 登录后调用此接口, 查询云小编会员任务状态, 当 `data.status = 20` 时, 可调用 `/rep/ugc/user/collect-vip` 领取会员
+
+**接口地址:** `/rep/ugc/user/vip`
+
+**调用例子:** `/rep/ugc/user/vip`
+
+### 云小编 - 活动信息
+
+说明: 登录后调用此接口, 查询云小编会员活动信息
+
+**接口地址:** `/rep/ugc/activity/get`
+
+**调用例子:** `/rep/ugc/activity/get`
+
+### 云小编 - 获取任务
+
+> 注意: 调用前请先使用官方客户端完成云小编“情绪标签审核”入站考试
+
+**可选参数:**
+
+`type`: 任务类型, 1: 歌曲曲风审核, 2: 歌曲语种审核, 3: 歌曲原唱审核, 4: 情绪标签审核, 默认 `4`
+
+**接口地址:** `/thinktank/audit/resource/detail`
+
+**调用例子:** `/thinktank/audit/resource/detail?type=4`
+
+### 云小编 - 提交任务
+
+> 注意: 投票结果会在后台审核, 一致 +3 积分, 不一致 -2 积分
+
+**可选参数:**
+
+`type`: 任务类型, 1: 歌曲曲风审核, 2: 歌曲语种审核, 3: 歌曲原唱审核, 4: 情绪标签审核, 默认 `4`
+
+**必选参数:**
+
+`taskId`: 任务 ID, 调用 `/thinktank/audit/resource/detail` 获取 `data.taskId`
+
+`judgement`: 审核结果, 1: 同意, 2: 否决, 3: 跳过 (不算次数)
+
+**接口地址:** `/thinktank/audit/resource/update`
+
+**调用例子:** `/thinktank/audit/resource/update?type=4&taskId=123456&judgement=1`
+
+### 云小编 - 领取任务积分
+
+说明: 完成任务后调用此接口, 领取云小编任务积分
+
+**可选参数:**
+
+`activityId`: 活动 ID, 调用 `/rep/ugc/activity/get` 获取, 默认 `5001`
+
+**接口地址:** `/rep/ugc/activity/collect`
+
+**调用例子:** `/rep/ugc/activity/collect?activityId=5001`
+
+### 云小编 - 领取一日会员
+
+说明: 达成领取条件 (`/rep/ugc/user/vip`) 后调用此接口, 领取一日会员
+
+**可选参数:**
+
+`activityId`: 活动 ID, 调用 `/rep/ugc/activity/get` 获取, 默认 `5001`
+
+**接口地址:** `/rep/ugc/user/collect-vip`
+
+**调用例子:** `/rep/ugc/user/collect-vip?activityId=5001`
 
 ## 离线访问此文档
 
