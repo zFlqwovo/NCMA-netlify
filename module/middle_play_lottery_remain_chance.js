@@ -1,13 +1,16 @@
-// 检测手机号码是否已注册
+// 云小编抽奖剩余次数查询
+//
+// activityId:
+// 默认 6501202
 
 const createOption = require('../util/option.js')
+
 module.exports = (query, request) => {
   const data = {
-    cellphone: query.phone,
-    countrycode: query.countrycode,
+    activityId: query.activityId || '6501202',
   }
   return request(
-    `/api/cellphone/existence/check`,
+    `/api/middle/play/lottery/remain/chance`,
     data,
     createOption(query, 'eapi'),
   )
