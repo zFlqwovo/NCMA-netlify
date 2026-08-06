@@ -10,7 +10,3 @@ anonymous_token
 .vercel
 .env
 IFLOW.md
-# Local Netlify folder
-.netlify
-# CodeGraph local data
-.codegraph/
