@@ -12,7 +12,7 @@ async function getHandler() {
   }
   const { constructServer } = require('../../server')
   const app = await constructServer()
-  handler = serverless(app, { basePath: '/.netlify/functions/api' })
+  handler = serverless(app)
   return handler
 }
 

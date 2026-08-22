@@ -1,5 +1,5 @@
 [build]
-  command = "npm install"
+  command = "corepack enable && corepack prepare pnpm@9 --activate && pnpm install --frozen-lockfile"
   functions = "netlify/functions"
 
 [functions]
