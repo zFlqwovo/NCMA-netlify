@@ -1,0 +1,13 @@
+[build]
+  command = "corepack enable && corepack prepare pnpm@9 --activate && pnpm install --frozen-lockfile"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "nft"
+  included_files = ["module/**", "util/**", "plugins/**", "public/**", "data/**", "generateConfig.js", "main.js", "server.js"]
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
